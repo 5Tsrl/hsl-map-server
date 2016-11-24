@@ -1,11 +1,11 @@
 module.exports = {
-  "/hsl-vector-map": {
-    "source": "mbtiles://./finland.mbtiles",
+  "/turin-vector-map": {
+    "source": "mbtiles://./turin_italy.mbtiles",
     "headers": {
       "Cache-Control": "public,max-age=86400"
     }
   },
-  "/hsl-map": {
+  "/turin-map": {
     "source": {
       "protocol": "gl:",
       "query": {},
@@ -15,7 +15,7 @@ module.exports = {
       "Cache-Control": "public,max-age=604800"
     }
   },
-  "/hsl-map-256": {
+  "/turin-map-256": {
     "source": {
       "protocol": "gl:",
       "query": {layerTileSize: 256},
@@ -25,12 +25,25 @@ module.exports = {
       "Cache-Control": "public,max-age=604800"
     }
   },
+  "/turin-bikerental-map": {
+    "source": `otpcitybikes://172.21.6.33:8080/otp/routers/mat/index/graphql`,
+    "headers": {
+      "Cache-Control": "public,max-age=3600"
+    }
+  },/*
   "/hsl-citybike-map": {
     "source": `otpcitybikes://${process.env.HSL_OTP_URL}`,
     "headers": {
       "Cache-Control": "public,max-age=3600"
     }
+  },*/
+  "/turin-stop-map": {
+    "source": `otpstops://172.21.6.33:8080/otp/routers/mat/index/graphql`,
+    "headers": {
+      "Cache-Control": "public,max-age=3600"
+    }
   },
+  /*
   "/hsl-stop-map": {
     "source": `otpstops://${process.env.HSL_OTP_URL}`,
     "headers": {
@@ -67,4 +80,5 @@ module.exports = {
       "Cache-Control": "public,max-age=3600"
     }
   }
+  */
 }
