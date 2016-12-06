@@ -29,12 +29,15 @@ RUN npm install
 #raf RUN curl https://osm2vectortiles-downloads.os.zhdk.cloud.switch.ch/v2.0/extracts/finland.mbtiles > finland.mbtiles
 RUN curl https://osm2vectortiles-downloads.os.zhdk.cloud.switch.ch/v2.0/extracts/turin_italy.mbtiles > turin_italy.mbtiles
 
+
 #RUN npm install https://github.com/hannesj/tilelive-gl.git
 
 #raf RUN npm install https://github.com/HSLdevcom/hsl-map-style.git
 RUN npm install https://github.com/aguiraf/hsl-map-style.git#5twork
 
 RUN cd ${WORK}/node_modules/hsl-map-style && \
+  sed -i -e "s#http://localhost:8000/#file://${WORK}/node_modules/hsl-map-style/#" hsl-gl-map-v9-no-icons.json && \
+  sed -i -e 's#api.digitransit.fi/map/v1/#localhost:8080/#' hsl-gl-map-v9-no-icons.json && \
   sed -i -e "s#http://localhost:8000/#file://${WORK}/node_modules/hsl-map-style/#" hsl-gl-map-v9.json && \
   sed -i -e 's#api.digitransit.fi/map/v1/#localhost:8080/#' hsl-gl-map-v9.json && \
   sed -i -e "s#http://localhost:8000/#file://${WORK}/node_modules/hsl-map-style/#" 5t-gl-map-v9.json && \
