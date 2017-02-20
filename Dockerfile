@@ -1,47 +1,27 @@
 FROM node:4
-MAINTAINER Reittiopas version: 0.1
+MAINTAINER 5T version: 0.1
 
-ENV FONTSTACK_PASSWORD ""
-ENV HSL_OTP_URL api.digitransit.fi/routing/v1/routers/hsl/index/graphql
-ENV FINLAND_OTP_URL api.digitransit.fi/routing/v1/routers/finland/index/graphql
-ENV WALTTI_OTP_URL api.digitransit.fi/routing/v1/routers/waltti/index/graphql
-ENV WORK=/opt/hsl-map-server
+ENV \
+  MAT_OTP_URL='172.21.6.33:8080/otp/routers/mat/index/graphql' \
+  WORK='/opt/hsl-map-server'
 
 WORKDIR ${WORK}
 
-RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list
-RUN echo "deb http://http.debian.net/debian testing main" >> /etc/apt/sources.list
+RUN \
+  echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list  && \
+  echo "deb http://http.debian.net/debian testing main" >> /etc/apt/sources.list           && \
+  apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y  pngquant && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports libgl1-mesa-glx libgl1-mesa-dri xserver-xorg-video-dummy && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y -t testing libstdc++6 mapnik-vector-tile  && \
+  mkdir -p ${WORK}
 
-
-RUN apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y git unzip pngquant \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports libgl1-mesa-glx libgl1-mesa-dri xserver-xorg-video-dummy \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y -t testing libstdc++6 mapnik-vector-tile
-
-RUN mkdir -p ${WORK}
 
 ADD . ${WORK}
-
 RUN npm install
 
-#TODO: Replace when https://github.com/osm2vectortiles/osm2vectortiles/issues/114 is fixed
-#RUN curl http://koti.kapsi.fi/~hannes/tiles.v7.mbtiles > finland.mbtiles
-#raf RUN curl https://osm2vectortiles-downloads.os.zhdk.cloud.switch.ch/v2.0/extracts/finland.mbtiles > finland.mbtiles
-RUN curl https://osm2vectortiles-downloads.os.zhdk.cloud.switch.ch/v2.0/extracts/turin_italy.mbtiles > turin_italy.mbtiles
+#RUN curl https://osm2vectortiles-downloads.os.zhdk.cloud.switch.ch/v2.0/extracts/turin_italy.mbtiles > turin_italy.mbtiles
 
-
-#RUN npm install https://github.com/hannesj/tilelive-gl.git
-
-#raf RUN npm install https://github.com/HSLdevcom/hsl-map-style.git
-RUN npm install https://github.com/aguiraf/hsl-map-style.git#5twork
-
-RUN cd ${WORK}/node_modules/hsl-map-style && \
-  sed -i -e "s#http://localhost:8000/#file://${WORK}/node_modules/hsl-map-style/#" hsl-gl-map-v9-no-icons.json && \
-  sed -i -e 's#api.digitransit.fi/map/v1/#localhost:8080/#' hsl-gl-map-v9-no-icons.json && \
-  sed -i -e "s#http://localhost:8000/#file://${WORK}/node_modules/hsl-map-style/#" hsl-gl-map-v9.json && \
-  sed -i -e 's#api.digitransit.fi/map/v1/#localhost:8080/#' hsl-gl-map-v9.json && \
-  sed -i -e "s#http://localhost:8000/#file://${WORK}/node_modules/hsl-map-style/#" 5t-gl-map-v9.json && \
-  sed -i -e 's#api.digitransit.fi/map/v1/#localhost:8080/#' 5t-gl-map-v9.json
 
 EXPOSE 8080
 
@@ -50,9 +30,10 @@ RUN chmod -R 777 ${WORK}
 RUN mkdir /.forever && chmod -R 777 /.forever
 USER 9999
 
-CMD cd ${WORK}/node_modules/hsl-map-style && \
-#  unzip -P ${FONTSTACK_PASSWORD} fontstack.zip && \
-  unzip  fontstack.zip && \
+CMD \
+  # cd ${WORK}/node_modules/hsl-map-style && \
+  # unzip -P ${FONTSTACK_PASSWORD} fontstack.zip && \
+  # unzip  fontstack.zip && \
   cd ${WORK} && \
   Xorg -dpi 96 -nolisten tcp -noreset +extension GLX +extension RANDR +extension RENDER -logfile ./10.log -config ./xorg.conf :10 & \
   sleep 15 && \
