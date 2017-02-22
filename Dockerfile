@@ -1,21 +1,11 @@
-FROM node:4
-MAINTAINER 5T version: 0.1
+FROM mapservbase
+MAINTAINER 5T version: 0.2
 
 ENV \
   MAT_OTP_URL='172.21.6.33:8080/otp/routers/mat/index/graphql' \
   WORK='/opt/hsl-map-server'
 
 WORKDIR ${WORK}
-
-RUN \
-  echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list  && \
-  echo "deb http://http.debian.net/debian testing main" >> /etc/apt/sources.list           && \
-  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y  pngquant && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports libgl1-mesa-glx libgl1-mesa-dri xserver-xorg-video-dummy && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y -t testing libstdc++6 mapnik-vector-tile  && \
-  mkdir -p ${WORK}
-
 
 ADD . ${WORK}
 RUN npm install

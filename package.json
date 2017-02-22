@@ -19,7 +19,7 @@
   "dependencies": {
     "forever": "^0.15.2",
     "mbtiles": "hannesj/node-mbtiles#patch-1",
-    "tessera": "^0.9.0",
+    "tessera": "https://github.com/5Tsrl/tessera.git",
     "tilejson": "^1.0.1",
     "tilelive-gl": "https://github.com/HSLdevcom/tilelive-gl.git",
     "tilelive-hsl-parkandride": "^0.0.5",

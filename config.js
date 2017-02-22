@@ -4,21 +4,16 @@ module.exports = {
     "source": "mbtiles:///var/mbtiles/provto.mbtiles",
     "headers": {
       "Cache-Control": "public,max-age=86400"
-    }
+    },
   },
   "/turin-map": {
     "source": {
       "protocol": "gl:",
       "query": {},
       //"style": require("hsl-map-style/hsl-gl-map-v9-no-icons.json")
-      "style": require("/var/mapstyles/5t-gl-map.json"),
-      "name":"pippo",
-      "center":[7.67,45.06,14],
-      "bounds":[-180,-85.0511,180,85.0511],
+      //"style": require("/var/mapstyles/5t-gl-map.json"),
+      "style": require("/var/mapstyles/styleMOD.json"),
     },
-    "name":"pluto",
-    "center":[7.67,45.06,11],
-    "bounds":[-180,-85.0511,180,85.0511],
     "headers": {
       "Cache-Control": "public,max-age=604800"
     }
@@ -28,7 +23,7 @@ module.exports = {
       "protocol": "gl:",
       "query": {layerTileSize: 256},
       //"style": require("hsl-map-style")
-      "style": require("/var/mapstyles/5t-gl-map.json")
+      "style": require("/var/mapstyles/styleMOD.json"),
     },
     "headers": {
       "Cache-Control": "public,max-age=604800"
