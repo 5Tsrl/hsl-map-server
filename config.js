@@ -1,7 +1,8 @@
 module.exports = {
   "/turin-vector-map": {
     //"source": "mbtiles://./turin_italy.mbtiles",
-    "source": "mbtiles:///var/mbtiles/provto.mbtiles",
+    //"source": "mbtiles:///var/mbtiles/provto.mbtiles",
+    "source": "mbtiles:///data/mbtiles/tiles.mbtiles",
     "headers": {
       "Cache-Control": "public,max-age=86400"
     },
@@ -12,10 +13,11 @@ module.exports = {
       "query": {},
       //"style": require("hsl-map-style/hsl-gl-map-v9-no-icons.json")
       //"style": require("/var/mapstyles/5t-gl-map.json"),
-      "style": require("/var/mapstyles/styleMOD.json"),
+      //"style": require("/var/mapstyles/styleMOD.json"),
+      "style": require("/data/mapstyles/style.json"),
     },
     "headers": {
-      "Cache-Control": "public,max-age=604800"
+      "Cache-Control": "public,max-age=604800"//7gg
     }
   },
   "/turin-map-256": {
@@ -23,10 +25,10 @@ module.exports = {
       "protocol": "gl:",
       "query": {layerTileSize: 256},
       //"style": require("hsl-map-style")
-      "style": require("/var/mapstyles/styleMOD.json"),
+      "style": require("/data/mapstyles/style.json"),
     },
     "headers": {
-      "Cache-Control": "public,max-age=604800"
+      "Cache-Control": "public,max-age=604800"//7gg
     }
   },
   "/turin-bikerental-map": {
