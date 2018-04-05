@@ -11,24 +11,23 @@ module.exports = {
     "source": {
       "protocol": "gl:",
       "query": {},
-      //"style": require("hsl-map-style/hsl-gl-map-v9-no-icons.json")
-      //"style": require("/var/mapstyles/5t-gl-map.json"),
-      //"style": require("/var/mapstyles/styleMOD.json"),
       "style": require("/data/mapstyles/style.json"),
     },
     "headers": {
-      "Cache-Control": "public,max-age=604800"//7gg
+      "Cache-Control": "public,max-age=604800",    //7gg
+      "Last-Modified":`${process.env.TILES_LAST_MODIFIED}`, //es Wed, 22 Mar 2017 11:07:00 GMT
     }
   },
   "/turin-map-256": {
     "source": {
       "protocol": "gl:",
       "query": {layerTileSize: 256},
-      //"style": require("hsl-map-style")
       "style": require("/data/mapstyles/style.json"),
     },
     "headers": {
-      "Cache-Control": "public,max-age=604800"//7gg
+      "Cache-Control": "public,max-age=604800",    //7gg
+      "Last-Modified":`${process.env.TILES_LAST_MODIFIED}`, //es Wed, 22 Mar 2017 11:07:00 GMT
+      "X-pippo":"pluto"
     }
   },
   "/turin-bikerental-map": {
