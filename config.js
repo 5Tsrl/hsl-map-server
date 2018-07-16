@@ -1,19 +1,15 @@
-const sourcesUrl = "hsl-map-server:8080/map/v1/";
-const glyphsUrl = `file://${process.env.WORK}/node_modules/hsl-map-style/`;
-
 module.exports = {
-  "/turin-vector-map": {
-    "source": "mbtiles:///data/mbtiles/tiles.mbtiles",
-    "headers": {
-      "Cache-Control": "public,max-age=86400"
-    },
-  },
+  // "/turin-vector-map": {
+  //   "source": "mbtiles:///data/mbtiles/tiles.mbtiles",
+  //   "headers": {
+  //     "Cache-Control": "public,max-age=86400"
+  //   },
+  // },
   "/turin-map": {
-    //"source": "gl:///data/mapstyles/style.json",
     "source": {
       "protocol": "gl:",
       "query": {},
-      "style": require("/data/mapstyles/style.json"),
+      "style": require("./style.json"),
     },
     "headers": {
       "Cache-Control": "public,max-age=604800",    //7gg
@@ -24,7 +20,8 @@ module.exports = {
     "source": {
       "protocol": "gl:",
       "query": {layerTileSize: 256},
-      "style": require("/data/mapstyles/style.json"),
+      "style": require("./style.json"),
+      // "style": require("http://sudocker:8080/data/mapstyles/style.json"), NON FUNGE
     },
     "headers": {
       "Cache-Control": "public,max-age=604800",    //7gg

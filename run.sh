@@ -1,26 +1,15 @@
 #!/bin/bash
 
-#workaround for azure DNS issue
-
-# if [ "$EUID" -eq 0 ]
-#   then echo "search marathon.l4lb.thisdcos.directory" >> /etc/resolv.conf
-# fi
-
-#start map server
-
-# cd ${WORK}/node_modules/hsl-map-style && \
-# unzip -P ${FONTSTACK_PASSWORD} fontstack.zip && \
-# 5t
-# -r ${WORK}/node_modules/tilelive-hsl-parkandride \
-# -r ${WORK}/node_modules/tilelive-hsl-ticket-sales \
-cd ${WORK} && \
+curl http://sudocker:8080/styles/mato/style.json -o ./style.json && \
 rm -f /tmp/.X10-lock && \
 Xorg -dpi 96 -nolisten tcp -noreset +extension GLX +extension RANDR +extension RENDER -logfile ./10.log -config ./xorg.conf :10 & \
-sleep 15 && \
-DISPLAY=":10" node_modules/.bin/forever start -c "node ${NODE_OPTS}" \
+sleep 5 && \
+DISPLAY=":10" node \
 node_modules/tessera/bin/tessera.js --port 8080 --config config.js --multiprocess \
 -r ${WORK}/node_modules/tilelive-otp-citybikes/ \
 -r ${WORK}/node_modules/tilelive-otp-stops/ \
--r ${WORK}/node_modules/tilelive-otp-routes/ \
--r ${WORK}/node_modules/tilelive-gl/ \
-&& sleep 10 && node_modules/.bin/forever --fifo logs 0
+-r ${WORK}/node_modules/tilelive-gl/ 
+# -r ${WORK}/node_modules/tilelive-hsl-parkandride \
+# -r ${WORK}/node_modules/tilelive-hsl-ticket-sales \
+# -r ${WORK}/node_modules/tilelive-otp-routes/ \
+
