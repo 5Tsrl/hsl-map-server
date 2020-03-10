@@ -1,15 +1,16 @@
 module.exports = {
-  // "/turin-vector-map": {
-  //   "source": "mbtiles:///data/mbtiles/tiles.mbtiles",
-  //   "headers": {
-  //     "Cache-Control": "public,max-age=86400"
-  //   },
-  // },
+  "/turin-vector-map": {
+    "source": "mbtiles:///data/mbtiles/tiles.mbtiles",
+    "headers": {
+      "Cache-Control": "public,max-age=86400"
+    },
+  },
   "/turin-map": {
     "source": {
       "protocol": "gl:",
       "query": {},
-      "style": require("./style.json"),
+      //"style": require("./style.json"),
+      "style": require("/data/mapstyles/style.json"),
     },
     "headers": {
       "Cache-Control": "public,max-age=604800",    //7gg
@@ -20,8 +21,9 @@ module.exports = {
     "source": {
       "protocol": "gl:",
       "query": {layerTileSize: 256},
-      "style": require("./style.json"),
       // "style": require("http://sudocker:8080/data/mapstyles/style.json"), NON FUNGE
+      // "style": require("./style.json"),
+      "style": require("/data/mapstyles/style.json"),
     },
     "headers": {
       "Cache-Control": "public,max-age=604800",    //7gg
@@ -33,7 +35,7 @@ module.exports = {
     "source": `otpcitybikes://${process.env.MAT_OTP_URL}`,
     //"source": `otpcitybikes://172.21.6.33:8080/otp/routers/mat/index/graphql`,
     "headers": {
-      "Cache-Control": "public,max-age=3600"
+      "Cache-Control": "public,max-age=30"
     }
   },
   "/turin-stop-map": {
