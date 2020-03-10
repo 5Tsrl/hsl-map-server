@@ -1,0 +1,38 @@
+version: '3'
+# ad oggi 03/2020 mapserver è stato comodamente messo in uno stack swarm...
+# questa versione dovrebbe rilanciare i container così come in produzione su panamaal 4/2019 con imageid :
+# registry:5000/mapserver            latest              552cc2434a7a        2 years ago         2.29GB
+services:
+
+  mapserver_1:
+    image: registry:5000/mapserver
+    container_name: mapserver_1
+    ports:
+      - 8091:8080
+    volumes:
+      - /data/mapserver/:/data/
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Rome
+      - TILES_LAST_MODIFIED="Wed, 22 Mar 2017 11:07:00 GMT"
+    command:
+      - /bin/sh
+      - -c
+      - "cd ${WORK} &&   rm -f /tmp/.X10-lock &&   Xorg -dpi 96 -nolisten tcp -noreset +extension GLX +extension RANDR +extension RENDER -logfile ./10.log -config ./xorg.conf :10 &   sleep 15 &&   DISPLAY=\":10\" node_modules/.bin/forever start -c \"node --harmony\"   node_modules/tessera/bin/tessera.js --port 8080 --config config.js   -r ${WORK}/node_modules/tilelive-otp-citybikes/   -r ${WORK}/node_modules/tilelive-otp-stops/   -r ${WORK}/node_modules/tilelive-otp-routes/   -r ${WORK}/node_modules/tilelive-gl/   && sleep 10 && node_modules/.bin/forever --fifo logs 0"
+
+  mapserver_2:
+    image: registry:5000/mapserver
+    container_name: mapserver_2
+    ports:
+      - 8092:8080
+    volumes:
+      - /data/mapserver/:/data/
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Rome
+      - TILES_LAST_MODIFIED="Wed, 22 Mar 2017 11:07:00 GMT"
+    command:
+      - /bin/sh
+      - -c
+      - "cd ${WORK} &&   rm -f /tmp/.X10-lock &&   Xorg -dpi 96 -nolisten tcp -noreset +extension GLX +extension RANDR +extension RENDER -logfile ./10.log -config ./xorg.conf :10 &   sleep 15 &&   DISPLAY=\":10\" node_modules/.bin/forever start -c \"node --harmony\"   node_modules/tessera/bin/tessera.js --port 8080 --config config.js   -r ${WORK}/node_modules/tilelive-otp-citybikes/   -r ${WORK}/node_modules/tilelive-otp-stops/   -r ${WORK}/node_modules/tilelive-otp-routes/   -r ${WORK}/node_modules/tilelive-gl/   && sleep 10 && node_modules/.bin/forever --fifo logs 0"
+
