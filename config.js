@@ -35,7 +35,7 @@ module.exports = {
     "source": `otpcitybikes://${process.env.MAT_OTP_URL}`,
     //"source": `otpcitybikes://172.21.6.33:8080/otp/routers/mat/index/graphql`,
     "headers": {
-      "Cache-Control": "public,max-age=30"
+      "Cache-Control": "public,max-age=5"  // cache dei monopattini  per 5 sec
     }
   },
   "/turin-stop-map": {

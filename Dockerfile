@@ -3,9 +3,12 @@ FROM node:6-stretch
 #  MAT_OTP_URL="172.21.6.33:8080/otp/routers/mat/index/graphql" \
 # MAT_OTP_URL="sudocker:8070/otp/routers/mato/index/graphql" \
 ENV \
-  MAT_OTP_URL="swarm.5t.torino.it:8070/otp/routers/mato/index/graphql" \
-  TILES_LAST_MODIFIED="Wed, 22 Mar 2017 11:07:00 GMT" \
+  # MAT_OTP_URL="swarm.5t.torino.it:8070/otp/routers/mato/index/graphql" \
+  MAT_OTP_URL="approxymato:8080/otp/routers/mato/index/graphql" \
+  # TILES_LAST_MODIFIED definito anche sul compose file di swarm, che ha precedenza
+  TILES_LAST_MODIFIED="Wed, 09 Sep 2020 11:22:00 GMT" \
   WORK="/hsl-map-server"
+
 
 RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y git unzip pngquant libgl1-mesa-glx libgl1-mesa-dri xserver-xorg-video-dummy libgles2-mesa libstdc++6
@@ -23,6 +26,3 @@ EXPOSE 8080
 CMD ./run.sh
 
 # docker build -t registry:5000/map-server . ;      docker push  registry:5000/map-server
-
-# test locale
-# docker run -dt -v /data/map-server:/data -p 8091:8080 --rm --name mapserver -e TILES_LAST_MODIFIED="`date -u +%a,\ %d\ %b\ %Y\ %H:%M:%S\ GMT`" registry:5000/map-server &&  docker logs -f mapserver
