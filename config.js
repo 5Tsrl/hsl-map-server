@@ -1,6 +1,7 @@
 module.exports = {
   "/turin-vector-map": {
-    "source": "mbtiles:///data/mbtiles/tiles.mbtiles",
+    // "source": "mbtiles:///data/mbtiles/tiles.mbtiles",
+    "source": "mbtiles://./tiles.mbtiles",
     "headers": {
       "Cache-Control": "public,max-age=86400"
     },
@@ -33,14 +34,13 @@ module.exports = {
   },
   "/turin-bikerental-map": {
     "source": `otpcitybikes://${process.env.MAT_OTP_URL}`,
-    //"source": `otpcitybikes://172.21.6.33:8080/otp/routers/mat/index/graphql`,
     "headers": {
       "Cache-Control": "public,max-age=5"  // cache dei monopattini  per 5 sec
     }
   },
   "/turin-stop-map": {
     //"source": `otpstops://172.21.6.33:8080/otp/routers/mat/index/graphql`,
-    "source": `otpstops://${process.env.MAT_OTP_URL}`,
+    "source": `otpstops://${process.env.MAT_OTP_STOP_URL}`,
     "headers": {
       "Cache-Control": "public,max-age=3600"
     }
